@@ -3,6 +3,12 @@
 # Changes for Text::KwikiFormatish
 #
 
+- version: 1.01
+  date:    Fri Feb 13 09:57:37 EST 2004
+  changes:
+    - Small fixes to documenation
+    - Fixed bug where some <img> tags weren't closed
+
 - version: 1.00
   date:    Wed Feb  4 21:41:37 EST 2004
   changes:

@@ -2,7 +2,7 @@ package Text::KwikiFormatish;
 use strict;
 use warnings;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 use CGI::Util qw(escape unescape);
 
@@ -347,7 +347,7 @@ sub mailto_link_format {
 
 sub img_format {
     my ($self, $url) = @_;
-    return qq{<img src="$url">};
+    return qq{<img src="$url" />};
 }
 
 sub link_format {
@@ -568,8 +568,6 @@ Text::KwikiFormatish - convert Kwikitext into XML-compliant HTML
 
 =head1 DESCRIPTION
 
-B<NOTE: This is a beta release.> Version 1.00 will be released by February, 2004 if not sooner.
-
 L<CGI::Kwiki> includes a formatter (L<CGI::Kwiki::Formatter>) for converting Kwikitext (a nice form of wikitext) to HTML. Unfortunately, it isn't easy to use the formatter outside the L<CGI::Kwiki> environment. Additionally, the HTML produced by the formatter isn't XHTML-1 compliant. This module aims to fix both of these issues and provide an interface similar to L<Text::WikiFormat>.
 
 Essentially, this module is the code from Brian Ingerson's L<CGI::Kwiki::Formatter> with a C<format> subroutine, code relating to slides removed, tweaked subroutinesa, and more. 
@@ -624,7 +622,7 @@ I've included two plugins, C<img> and C<icon>, to do basic image support besides
 Here's some kwiki text:
 
     = Level 1 Header
-
+    
     == Level 2 with optional trailing equals ==
     
     Kwikitext provides a bit more flexibility than regular wikitext.
@@ -632,7 +630,7 @@ Here's some kwiki text:
     All HTML code is <escaped>. Horizontal rules are four or more hyphens:
     
     ----
-
+    
     While you can add an mdash---like this.
     
     ##
@@ -681,9 +679,9 @@ Here's some kwiki text:
     http://www.kwiki.org/
     
     [Kwiki named link http://www.kwiki.org/]
-
+    
     == Images
-
+    
     http://search.cpan.org/s/img/cpan_banner.png
     
     == KwikiFormatish plugins

@@ -6,9 +6,6 @@ SYNOPSIS
       my $xml = Text::KwikiFormatish::format($text);
 
 DESCRIPTION
-    NOTE: This is a beta release. Version 1.00 will be released by February,
-    2004 if not sooner.
-
     CGI::Kwiki includes a formatter (CGI::Kwiki::Formatter) for converting
     Kwikitext (a nice form of wikitext) to HTML. Unfortunately, it isn't
     easy to use the formatter outside the CGI::Kwiki environment.
@@ -65,7 +62,7 @@ EXAMPLES
     Here's some kwiki text:
 
         = Level 1 Header
-
+    
         == Level 2 with optional trailing equals ==
     
         Kwikitext provides a bit more flexibility than regular wikitext.
@@ -73,7 +70,7 @@ EXAMPLES
         All HTML code is <escaped>. Horizontal rules are four or more hyphens:
     
         ----
-
+    
         While you can add an mdash---like this.
     
         ##
@@ -122,9 +119,9 @@ EXAMPLES
         http://www.kwiki.org/
     
         [Kwiki named link http://www.kwiki.org/]
-
+    
         == Images
-
+    
         http://search.cpan.org/s/img/cpan_banner.png
     
         == KwikiFormatish plugins
