@@ -1,14 +1,12 @@
-use ExtUtils::MakeMaker;
+use inc::Module::Install;
 
-WriteMakefile(
-    'NAME'          => 'Text::KwikiFormatish',
-    'ABSTRACT_FROM' => 'lib/Text/KwikiFormatish.pm',
-    'AUTHOR'        => 'Ian Langworth <ian@langworth.com>',
-    'VERSION_FROM'  => 'lib/Text/KwikiFormatish.pm',
-    dist => {
-        'PREOP'     => 'pod2text lib/Text/KwikiFormatish.pm >README',
-    },
-    'PREREQ_PM'     => { 
-        'CGI::Util',
-    },
-);
+name        ('Text-KwikiFormatish');
+abstract    ('convert Kwikitext into XML-compliant HTML');
+author      ('Ian Langworth <langworth.com>');
+version_from('lib/Text/KwikiFormatish.pm');
+license     ('perl');
+requires    (qw(
+    CGI::Util
+));
+
+WriteAll();

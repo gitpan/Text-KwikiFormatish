@@ -1,32 +1,42 @@
---- #YAML:1.0
-#
-# Changes for Text::KwikiFormatish
-#
+---
+version: 1.02
+date:    Tue Aug 17 21:53:59 EDT 2004
+changes:
+- Added Jesse Vincent's patch to make the process order easily subclassable
+- Wrote up some quick docs on subclassing
+- Properly accredited Ingy in the AUTHOR section
+- Headings now html_escape (req #7161)
+- Switched Makefile.pl to use Module::Install
 
-- version: 1.01
-  date:    Fri Feb 13 09:57:37 EST 2004
-  changes:
-    - Small fixes to documenation
-    - Fixed bug where some <img> tags weren't closed
+---
+version: 1.01
+date:    Fri Feb 13 09:57:37 EST 2004
+changes:
+- Small fixes to documenation
+- Fixed bug where some <img> tags weren't closed
 
-- version: 1.00
-  date:    Wed Feb  4 21:41:37 EST 2004
-  changes:
-    - Decided we're ready for a 1.0 release, nothing else
+---
+version: 1.00
+date:    Wed Feb  4 21:41:37 EST 2004
+changes:
+- Decided we're ready for a 1.0 release, nothing else
 
-- version: 0.03
-  date:    Mon Feb  2 22:36:56 EST 2004
-  changes:
-    - Added mdash markup
-    - Email address change
+---
+version: 0.03
+date:    Mon Feb  2 22:36:56 EST 2004
+changes:
+- Added mdash markup
+- Email address change
 
-- version: 0.02
-  date:    Thu Jan  8 20:09:35 EST 2004
-  changes:
-    - Initial release to CPAN
+---
+version: 0.02
+date:    Thu Jan  8 20:09:35 EST 2004
+changes:
+- Initial release to CPAN
 
-- version: 0.01
-  date:    Thu Jan  7 12:00:00 EST 2004
-  changes:
-    - Preview release
+---
+version: 0.01
+date:    Thu Jan  7 12:00:00 EST 2004
+changes:
+- Preview release
 

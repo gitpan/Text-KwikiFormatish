@@ -2,16 +2,32 @@ package Text::KwikiFormatish;
 use strict;
 use warnings;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 use CGI::Util qw(escape unescape);
 
-use vars qw($UPPER $LOWER $ALPHANUM $WORD $WIKIWORD);
+use vars qw($UPPER $LOWER $ALPHANUM $WORD $WIKIWORD @DEFAULTPROCESSORDER);
 $UPPER    = '\p{UppercaseLetter}';
 $LOWER    = '\p{LowercaseLetter}';
 $ALPHANUM = '\p{Letter}\p{Number}';
 $WORD     = '\p{Letter}\p{Number}\p{ConnectorPunctuation}';
 $WIKIWORD = "$UPPER$LOWER\\p{Number}\\p{ConnectorPunctuation}";
+
+@DEFAULTPROCESSORDER = qw(
+        function
+        header_1 header_2 header_3 header_4 header_5 header_6 
+        escape_html
+        horizontal_line comment lists
+        code paragraph 
+        named_http_link no_http_link http_link
+        no_mailto_link mailto_link
+        no_wiki_link force_wiki_link wiki_link
+        inline negation
+        bold italic underscore
+        mdash
+        table
+);
+
 
 ############# BEGIN USER FUNCTIONS ##############
 
@@ -80,24 +96,16 @@ sub _init {
     foreach my $k (keys %defs) {
         $self->{"_".$k} = $collated{$k};
     }
+
+    $self->process_order(@DEFAULTPROCESSORDER);
+
     return $self;
 }
 
 sub process_order {
-    return qw(
-        function
-        header_1 header_2 header_3 header_4 header_5 header_6 
-        escape_html
-        horizontal_line comment lists
-        code paragraph 
-        named_http_link no_http_link http_link
-        no_mailto_link mailto_link
-        no_wiki_link force_wiki_link wiki_link
-        inline negation
-        bold italic underscore
-        mdash
-        table
-    );
+    my $self = shift;
+    @{$self->{'process_order'}} = @_ if (@_);
+    return (@{$self->{'process_order'}});
 }
 
 sub process {
@@ -549,6 +557,7 @@ for my $num (1..6) {
     sub {
         my ($self, $text) = @_;
         $text =~ s/=+\s*$//;
+        $text = $self->escape_html($text);
         return "<h$num>$text</h$num>\n";
     };
 }
@@ -559,10 +568,11 @@ __END__
 
 =head1 NAME
 
-Text::KwikiFormatish - convert Kwikitext into XML-compliant HTML
+Text::KwikiFormatish - (OLD) convert Kwikitext into XML-compliant HTML
 
 =head1 SYNOPSIS
 
+  # use Text::KwikiFormat instead
   use Text::KwikiFormatish;
   my $xml = Text::KwikiFormatish::format($text);
 
@@ -581,7 +591,36 @@ C<format()> takes one or two arguments, with the first always being the wikitext
   my $xml = Text::KwikiFormatish::format(
     $text,
     prefix => '/wiki/',
-    );
+  );
+
+=head2 Subclassing the Formatter
+
+L<CGI::Kwiki::Formatter> was designed to be subclassable so that the formatting engine could be easily customized. Information on how the Kwiki formatter works can be found at L<HowKwikiFormatterWorks|http://www.kwiki.org/index.cgi?HowKwikiFormatterWorks>.
+
+For example, say you wanted to override the markup for strong (bold) text. You decide that it would make much more sense to write strong text as C<HEYthis is bold textHEY>. You would subclass Text::KwikiFormatish and use it like so:
+
+    package My::Formatter;
+    use base 'Text::KwikiFormatish';
+
+    # you need this
+    sub format { __PACKAGE__->new->process(@_) }
+    
+    # I simply copied this from Text/KwikiFormatish.pm and tweaked it
+    sub bold {
+        my ($self, $text) = @_;
+        $text =~ s#(?<![$WORD])HEY(\S.*?\S|\S)HEY(?![$WORD])#<strong>$1</strong>#g;
+        return $text;
+    }
+    
+    package main;
+    my $data = join( '', <> );
+    print My::Formatter::format( $data );
+
+NOTE: I dug myself into a hole by making this a drop-in replacement for L<Text::WikiFormat>, hence the C<format> subroutine.
+
+=head2 process_order()
+
+C<process_order()> returns a list of the formatting rules that will be applied when C<format> is called for this object. If called with a set of formatting rules (names of class methods), that set of formatting rules will supercede the default set.
 
 =head2 Differences from the Kwiki Formatter
 
@@ -619,7 +658,7 @@ I've included two plugins, C<img> and C<icon>, to do basic image support besides
 
 =head1 EXAMPLES
 
-Here's some kwiki text:
+Here's some kwiki text. (Compare with L<KwikiFormattingRules|http://www.kwiki.org/index.cgi?KwikiFormattingRules>.)
 
     = Level 1 Header
     
@@ -696,7 +735,13 @@ Here's some kwiki text:
 
 =head1 AUTHOR
 
-Ian Langworth - ian[aught]cpan.org
+Maintained by Ian Langworth - ian[aught]cpan.org
+
+Based on L<CGI::Kwiki::Formatter> by L<Brian Ingerson|http://search.cpan.org/~ingy/>.
+
+Thanks to L<Jesse Vincent|http://search.cpan.org/~jesse/> for the C<process_order> patch, related documentation and testing.
+
+Additional thanks to Mike Burns and Ari Pollak for additional testing.
 
 =head1 SEE ALSO
 

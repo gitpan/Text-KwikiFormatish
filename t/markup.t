@@ -1,6 +1,6 @@
 #!perl -w
 
-use Test::More tests => 23;
+use Test::More tests => 25;
 
 use_ok( 'Text::KwikiFormatish' );
 
@@ -15,6 +15,7 @@ $i = <<_EOF;
 ====== Header 6
 = Header T1 =
 = Header T2 ============
+= bacon & eggs
 <escapeme>
 ----
 ##comment1
@@ -26,6 +27,7 @@ $i = <<_EOF;
 //emphasized//
 here is an---mdash
 | bacon | eggs |
+ham & cheese
 
 para
 
@@ -44,6 +46,7 @@ foreach ( 1 .. 6 ) {
 foreach ( 1 .. 2 ) {
     like( $o, qr#<h1>Header T$_</h1>#, "heading 1 test $_, trailing '='" );
 }
+like( $o, qr#<h1>bacon &amp; eggs</h1>#, "ampersands in headers" );
 like( $o, qr#&lt;escapeme&gt;#, "escape_html" );
 like( $o, qr#<hr/>#, "horizontal_line" );
 foreach ( 1 .. 2 ) {
@@ -58,4 +61,5 @@ like( $o, qr#<em>emphasized</em>#, "emphasized" );
 like( $o, qr#an&\#151;mdash#, "mdash" );
 like( $o, qr#<p>\npara\n</p>#, "paragraph" );
 like( $o, qr#<td>bacon</td>\s*<td>eggs</td>#, "table" );
+like( $o, qr#ham &amp; cheese#, "escaping ampersands" );
 

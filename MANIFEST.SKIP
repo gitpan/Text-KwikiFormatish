@@ -1,2 +1,8 @@
-~Makefile$
-.svn
+^Makefile$
+^MANIFEST.bak$
+^blib/
+^pm_to_blib$
+^blibdirs$
+^Build$
+^_build/
+\.swp$

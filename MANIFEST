@@ -1,4 +1,12 @@
 Changes
+inc/Module/Install.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Can.pm
+inc/Module/Install/Fetch.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/Metadata.pm
+inc/Module/Install/Win32.pm
+inc/Module/Install/WriteAll.pm
 lib/Text/KwikiFormatish.pm
 Makefile.PL
 MANIFEST			This list of files
@@ -8,4 +16,4 @@ README
 t/links.t
 t/markup.t
 t/plugins.t
-TODO.yml
+t/subclass.t
