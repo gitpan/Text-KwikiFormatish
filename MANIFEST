@@ -1,0 +1,9 @@
+Changes.yml
+MANIFEST			This list of files
+MANIFEST.SKIP
+META.yml
+Makefile.PL
+README
+TODO.yml
+lib/Text/KwikiFormatish.pm
+t/all.t

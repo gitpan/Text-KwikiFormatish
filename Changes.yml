@@ -1,0 +1,15 @@
+--- #YAML:1.0
+#
+# Changes for Text::KwikiFormatish
+#
+
+- version: 0.02
+  date:    Thu Jan  8 20:09:35 EST 2004
+  changes:
+    - Initial release to CPAN
+
+- version: 0.01
+  date:    Thu Jan  7 12:00:00 EST 2004
+  changes:
+    - Preview release
+
