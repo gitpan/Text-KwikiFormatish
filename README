@@ -3,7 +3,7 @@ NAME
 
 SYNOPSIS
       use Text::KwikiFormatish;
-      my $xml = Text::KwikiFormatish::format( $text );
+      my $xml = Text::KwikiFormatish::format($text);
 
 DESCRIPTION
     NOTE: This is a beta release. Version 1.00 will be released by February,
@@ -24,6 +24,17 @@ DESCRIPTION
     little from the default Kwiki formatter, I thought it best to call it
     "Formatish" instead of *the* Kwiki Format.
 
+  format()
+    "format()" takes one or two arguments, with the first always being the
+    wikitext to translate. The second is a hash of options, but currently
+    the only option supported is "prefix" in case you want to prefix wiki
+    links with sommething. For example,
+
+      my $xml = Text::KwikiFormatish::format(
+        $text,
+        prefix => '/wiki/',
+        );
+
   Differences from the Kwiki Formatter
     * The output of the formatter is XML-compliant.
     * Extra equal signs at the end of headings will be removed from the
@@ -38,6 +49,7 @@ DESCRIPTION
     processed last)
     * Bold text is marked up as "<strong>" instead of "<b>"
     * "Inline" is marked up as "<code>" instead of "<tt>"
+    * mdashes (really long hyphens) are created with wikitext "like---this"
     * Tables and code sections are not indented with "<blockquote>" tags
     * Comments do not have to have a space immediately following the hash
     * Patch to named_link code
@@ -61,6 +73,8 @@ EXAMPLES
         All HTML code is <escaped>. Horizontal rules are four or more hyphens:
     
         ----
+
+        While you can add an mdash---like this.
     
         ##
         ## you can add comments in the kwikitext which appear as XML comments
@@ -124,7 +138,7 @@ EXAMPLES
         [&img /images/graph.gif Last Month's Earnings]
 
 AUTHOR
-    Ian Langworth - <ian@cpan.org>
+    Ian Langworth - ian[aught]cpan.org
 
 SEE ALSO
     CGI::Kwiki, CGI::Kwiki::Formatter, Text::WikiFormat

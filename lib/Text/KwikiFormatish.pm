@@ -2,7 +2,7 @@ package Text::KwikiFormatish;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use CGI::Util qw(escape unescape);
 
@@ -60,12 +60,6 @@ sub format {
 
     # translate Text::Wikiformat args to Kwiki formatter args
     $f->{_node_prefix} = $args{prefix} if exists $args{prefix};
-    warn "extended (or 'named') links are part of the kwikitext syntax and are always enabled"
-        if exists $args{extended};
-    warn "implicit links (CamelCase) are part of the kwikitext syntax and are always enabled"
-        if exists $args{implicit_links};
-    warn "absolute links are part of the kwikitext syntax and are always enabled"
-        if exists $args{absolute_links};
 
     # do the deed
     return $f->process($raw);
@@ -101,6 +95,7 @@ sub process_order {
         no_wiki_link force_wiki_link wiki_link
         inline negation
         bold italic underscore
+        mdash
         table
     );
 }
@@ -521,6 +516,12 @@ sub horizontal_line_format {
     return $text;
 }
 
+sub mdash {
+    my ($self, $text) = @_;
+    $text =~ s/([$WORD])-{3}([$WORD])/$1&#151;$2/g;
+    return $text;
+}
+
 sub comment {
     my ($self, $text) = @_;
     $self->split_method($text,
@@ -552,6 +553,10 @@ for my $num (1..6) {
     };
 }
 
+1;
+
+__END__
+
 =head1 NAME
 
 Text::KwikiFormatish - convert Kwikitext into XML-compliant HTML
@@ -559,7 +564,7 @@ Text::KwikiFormatish - convert Kwikitext into XML-compliant HTML
 =head1 SYNOPSIS
 
   use Text::KwikiFormatish;
-  my $xml = Text::KwikiFormatish::format( $text );
+  my $xml = Text::KwikiFormatish::format($text);
 
 =head1 DESCRIPTION
 
@@ -570,6 +575,15 @@ L<CGI::Kwiki> includes a formatter (L<CGI::Kwiki::Formatter>) for converting Kwi
 Essentially, this module is the code from Brian Ingerson's L<CGI::Kwiki::Formatter> with a C<format> subroutine, code relating to slides removed, tweaked subroutinesa, and more. 
 
 Since the wikitext spec for input wikitext for this module differs a little from the default Kwiki formatter, I thought it best to call it "Formatish" instead of *the* Kwiki Format.
+
+=head2 format()
+
+C<format()> takes one or two arguments, with the first always being the wikitext to translate. The second is a hash of options, but currently the only option supported is C<prefix> in case you want to prefix wiki links with sommething. For example,
+
+  my $xml = Text::KwikiFormatish::format(
+    $text,
+    prefix => '/wiki/',
+    );
 
 =head2 Differences from the Kwiki Formatter
 
@@ -588,6 +602,8 @@ Since the wikitext spec for input wikitext for this module differs a little from
 =item * Bold text is marked up as C<E<lt>strongE<gt>> instead of C<E<lt>bE<gt>>
 
 =item * "Inline" is marked up as C<E<lt>codeE<gt>> instead of C<E<lt>ttE<gt>>
+
+=item * mdashes (really long hyphens) are created with wikitext C<like---this>
 
 =item * Tables and code sections are not indented with C<E<lt>blockquoteE<gt>> tags
 
@@ -616,6 +632,8 @@ Here's some kwiki text:
     All HTML code is <escaped>. Horizontal rules are four or more hyphens:
     
     ----
+
+    While you can add an mdash---like this.
     
     ##
     ## you can add comments in the kwikitext which appear as XML comments
@@ -680,16 +698,14 @@ Here's some kwiki text:
 
 =head1 AUTHOR
 
-Ian Langworth - <ian@cpan.org>
+Ian Langworth - ian[aught]cpan.org
 
 =head1 SEE ALSO
 
-CGI::Kwiki, CGI::Kwiki::Formatter, Text::WikiFormat
+L<CGI::Kwiki>, L<CGI::Kwiki::Formatter>, L<Text::WikiFormat>
 
 =head1 LICENSE
 
 This is free software. You may use it and redistribute it under the same terms as perl itself.
 
 =cut
-
-1;

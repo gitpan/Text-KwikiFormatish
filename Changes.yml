@@ -3,6 +3,12 @@
 # Changes for Text::KwikiFormatish
 #
 
+- version: 0.03
+  date:    
+  changes:
+    - Added mdash markup
+    - Email address change
+
 - version: 0.02
   date:    Thu Jan  8 20:09:35 EST 2004
   changes:

@@ -1,9 +1,11 @@
 Changes.yml
+lib/Text/KwikiFormatish.pm
+Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
-Makefile.PL
 README
+t/links.t
+t/markup.t
+t/plugins.t
 TODO.yml
-lib/Text/KwikiFormatish.pm
-t/all.t
