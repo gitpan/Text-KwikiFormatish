@@ -3,8 +3,13 @@
 # Changes for Text::KwikiFormatish
 #
 
+- version: 1.00
+  date:    Wed Feb  4 21:41:37 EST 2004
+  changes:
+    - Decided we're ready for a 1.0 release, nothing else
+
 - version: 0.03
-  date:    
+  date:    Mon Feb  2 22:36:56 EST 2004
   changes:
     - Added mdash markup
     - Email address change

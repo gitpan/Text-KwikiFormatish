@@ -2,7 +2,7 @@ package Text::KwikiFormatish;
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '1.00';
 
 use CGI::Util qw(escape unescape);
 
