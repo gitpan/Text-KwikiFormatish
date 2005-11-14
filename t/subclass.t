@@ -4,11 +4,10 @@ use Test::More tests => 2;
 
 package My::Formatter;
 use base 'Text::KwikiFormatish';
-sub format { __PACKAGE__->new->process(@_) }
 sub bold { 'HONK' }
 
 package main;
-my $out = My::Formatter::format('*test*');
+my $out = My::Formatter->new->process('*test*');
 like $out, qr/HONK/;
 unlike $out, qr/<b>/;
 

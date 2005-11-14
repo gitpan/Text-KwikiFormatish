@@ -25,8 +25,8 @@ isnt( length($o), 0, 'output produced' );
 like( $o, qr#<img src="test1.png"#, "icon" );
 like( $o, qr#<img\s+src="test2.png"#, "img" );
 like( $o, qr#<img\s+src="test3.png"\s+alt="[^"]+"\s+title="named image"#, "named img" );
-SKIP: {
-    skip "glyph plugin not finished, inline plugins don't work", 2;
+TODO: {
+    local $TODO = 'glyph plugin not finished';
     like( $o, qr#A <img\s+src="test4.png"\s+alt="\*"[^>]*> B#, "glyph" );
     like( $o, qr#C <img\s+src="test5.png"\s+alt="named glyph"[^>]*> B#, "named glyph" );
 }

@@ -1,7 +1,7 @@
 name: Text-KwikiFormatish
-version: 1.02
+version: 1.10
 abstract: convert Kwikitext into XML-compliant HTML
-author: Ian Langworth <langworth.com>
+author: Ian Langworth <ian@cpan.org>
 license: perl
 distribution_type: module
 requires:
@@ -9,4 +9,4 @@ requires:
 no_index:
   directory:
     - inc
-generated_by: Module::Install version 0.35
+generated_by: Module::Install version 0.39
