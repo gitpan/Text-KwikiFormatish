@@ -15,6 +15,7 @@ META.yml
 README
 SIGNATURE
 t/0-signature.t
+t/eof.t
 t/links.t
 t/markup.t
 t/plugins.t

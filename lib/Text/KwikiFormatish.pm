@@ -2,7 +2,7 @@ package Text::KwikiFormatish;
 use strict;
 use warnings;
 
-our $VERSION = '1.10';
+our $VERSION = '1.11';
 
 use CGI::Util qw(escape unescape);
 
@@ -127,7 +127,7 @@ Process the given TEXT as KwikiText and return XHTML.
 sub process {
     my ( $self, $wiki_text ) = @_;
     my $array = [];
-    push @$array, $wiki_text;
+    push @$array, $wiki_text . "\n";
     for my $method ( $self->process_order ) {
         $array = $self->_dispatch( $array, $method );
     }
@@ -965,7 +965,7 @@ L<KwikiFormattingRules|http://www.kwiki.org/index.cgi?KwikiFormattingRules>.)
 
 =head1 AUTHOR
 
-Maintained by Ian Langworth - ian[aught]cpan.org
+Maintained by Ian Langworth - ian@cpan.org
 
 Based on L<CGI::Kwiki::Formatter> by L<Brian
 Ingerson|http://search.cpan.org/~ingy/>.
@@ -973,7 +973,7 @@ Ingerson|http://search.cpan.org/~ingy/>.
 Thanks to L<Jesse Vincent|http://search.cpan.org/~jesse/> for the
 C<process_order> patch, related documentation and testing.
 
-Additional thanks to Mike Burns and Ari Pollak for additional testing.
+Additional thanks to Mike Burns, Ari Pollak and Ricardo SIGNES for additional testing.
 
 =head1 SEE ALSO
 
